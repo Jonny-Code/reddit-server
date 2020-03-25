@@ -49,7 +49,7 @@ const validateUser = (req, res, next) => {
 app.use("/users", users);
 
 // private route
-app.use("/posts", validateUser, posts);
+app.use("/posts", posts);
 
 app.get("/favicon.ico", (req, res) => {
   res.sendStatus(204);
