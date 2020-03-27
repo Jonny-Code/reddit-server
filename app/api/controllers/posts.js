@@ -55,7 +55,7 @@ module.exports = {
         }
         res.json({
           status: "success",
-          message: "found the postlist",
+          message: "found the posts",
           data: { posts: postsList }
         });
       }

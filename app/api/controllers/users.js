@@ -24,7 +24,14 @@ module.exports = {
 
   authenticate: (req, res, next) => {
     userModel.findOne({ email: req.body.email }, (err, userInfo) => {
-      if (err) next(err);
+      if (err) next(err)
+      else if (!userInfo) {
+        res.status(401).json({
+          status: "error",
+          message: "wrong email",
+          data: null
+        });
+      }
       else {
         if (bcrypt.compareSync(req.body.password, userInfo.password)) {
           const token = jwt.sign(
@@ -38,9 +45,9 @@ module.exports = {
             data: { user: userInfo, token: token }
           });
         } else {
-          res.json({
+          res.status(401).json({
             status: "error",
-            message: "wrong email or password",
+            message: "wrong password",
             data: null
           });
         }
