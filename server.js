@@ -2,6 +2,7 @@ const express = require("express");
 const logger = require("morgan");
 const posts = require("./routes/posts");
 const users = require("./routes/users");
+const subreddits = require("./routes/subreddits");
 const mongoose = require("./config/database");
 const dotenv = require("dotenv");
 const cors = require("cors");
@@ -48,8 +49,8 @@ const validateUser = (req, res, next) => {
 // public route
 app.use("/users", users);
 
-// private route
 app.use("/posts", posts);
+app.use("/subreddits", subreddits);
 
 app.get("/favicon.ico", (req, res) => {
   res.sendStatus(204);

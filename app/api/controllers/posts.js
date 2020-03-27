@@ -1,28 +1,44 @@
 const postModel = require("../models/posts");
+const subredditModel = require("../models/subreddits");
 
 module.exports = {
   create: (req, res, next) => {
-    postModel.create(
-      {
-        votes: req.body.votes,
-        postedBy: req.body.postedBy,
-        postedAt: req.body.postedAt,
-        title: req.body.title,
-        imgSrc: req.body.imgSrc,
-        body: req.body.body,
-        comments: req.body.comments
-      },
-      (err, result) => {
-        if (err) next(err);
-        else {
-          res.json({
-            status: "success",
-            message: "posts has been added",
-            data: result
-          });
-        }
+    subredditModel.findOne({ name: req.body.name }, (err, doc) => {
+      if (err) next(err);
+      else {
+        postModel.create(
+          {
+            votes: req.body.votes,
+            postedBy: req.body.postedBy,
+            postedAt: req.body.postedAt,
+            title: req.body.title,
+            imgSrc: req.body.imgSrc,
+            body: req.body.body,
+            comments: req.body.comments
+          },
+          (err, result) => {
+            if (err) next(err);
+            else {
+              res.json({
+                status: "success",
+                message: "posts has been added",
+                data: result
+              });
+              subredditModel.findById(doc._id, (err, subInfo) => {
+                if (err) next(err);
+                else {
+                  subInfo.posts.push(result);
+                  console.log(subInfo);
+                  subInfo.save(err => {
+                    if (err) console.error(err);
+                  });
+                }
+              });
+            }
+          }
+        );
       }
-    );
+    });
   },
   getById: (req, res, next) => {
     postModel.findById(req.params.postId, (err, postInfo) => {
@@ -44,6 +60,7 @@ module.exports = {
         for (const post of posts) {
           postsList.push({
             _id: post._id,
+            subreddit: post.subreddit,
             votes: post.votes,
             postedBy: post.postedBy,
             postedAt: post.postedAt,

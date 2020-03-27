@@ -1,39 +1,15 @@
 const mongoose = require("mongoose");
-
 const Schema = mongoose.Schema;
 
-const PostSchema = new Schema({
-  votes: {
-    type: Number,
-    required: true
-  },
-  postedBy: {
-    type: String,
-    trim: true,
-    required: true
-  },
-  postedAt: {
-    type: String,
-    trim: true,
-    required: true
-  },
-  title: {
-    type: String,
-    trim: true,
-    required: true
-  },
-  imgSrc: {
-    type: String,
-    trim: true
-  },
-  body: {
-    type: String,
-    trim: true
-  },
-  comments: {
-    type: Array,
-    trim: true
-  }
+const postSchema = Schema({
+  subreddit: { type: Schema.Types.ObjectId, ref: "Subreddit" },
+  votes: Schema.Types.Number,
+  postedBy: Schema.Types.String,
+  postedAt: Schema.Types.String,
+  title: Schema.Types.String,
+  imgSrc: Schema.Types.String,
+  body: Schema.Types.String,
+  comments: Schema.Types.Number
 });
 
-module.exports = mongoose.model("Post", PostSchema);
+module.exports = mongoose.model("Post", postSchema);
