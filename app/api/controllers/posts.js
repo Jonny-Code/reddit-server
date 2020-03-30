@@ -1,6 +1,20 @@
 const postModel = require("../models/posts");
 const subredditModel = require("../models/subreddits");
 
+// Empty the posts array
+// subredditModel.findOneAndUpdate(
+//   { name: "Ubuntu" },
+//   { $set: { posts: [] } },
+//   { new: true },
+//   (err, doc) => {
+//     if (err) {
+//       console.log("Something wrong when updating data!");
+//     }
+
+//     console.log(doc);
+//   }
+// );
+
 module.exports = {
   create: (req, res, next) => {
     subredditModel.findOne({ name: req.body.name }, (err, doc) => {
@@ -8,6 +22,7 @@ module.exports = {
       else {
         postModel.create(
           {
+            subreddit: doc._id,
             votes: req.body.votes,
             postedBy: req.body.postedBy,
             postedAt: req.body.postedAt,
@@ -19,11 +34,6 @@ module.exports = {
           (err, result) => {
             if (err) next(err);
             else {
-              res.json({
-                status: "success",
-                message: "posts has been added",
-                data: result
-              });
               subredditModel.findById(doc._id, (err, subInfo) => {
                 if (err) next(err);
                 else {
@@ -33,6 +43,11 @@ module.exports = {
                     if (err) console.error(err);
                   });
                 }
+              });
+              res.json({
+                status: "success",
+                message: "posts has been added",
+                data: result
               });
             }
           }
@@ -52,28 +67,13 @@ module.exports = {
     });
   },
   getAll: (req, res, next) => {
-    let postsList = [];
-
     postModel.find({}, (err, posts) => {
       if (err) next(err);
       else {
-        for (const post of posts) {
-          postsList.push({
-            _id: post._id,
-            subreddit: post.subreddit,
-            votes: post.votes,
-            postedBy: post.postedBy,
-            postedAt: post.postedAt,
-            title: post.title,
-            imgSrc: post.imgSrc,
-            body: post.body,
-            comments: post.comments
-          });
-        }
         res.json({
           status: "success",
           message: "found the posts",
-          data: { posts: postsList }
+          data: { posts }
         });
       }
     });
