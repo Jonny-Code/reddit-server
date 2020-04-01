@@ -15,6 +15,7 @@ const subredditModel = require("../models/subreddits");
 //   }
 // );
 
+
 module.exports = {
   create: (req, res, next) => {
     subredditModel.findOne({ name: req.body.name }, (err, doc) => {
@@ -38,7 +39,6 @@ module.exports = {
                 if (err) next(err);
                 else {
                   subInfo.posts.push(result);
-                  console.log(subInfo);
                   subInfo.save(err => {
                     if (err) console.error(err);
                   });

@@ -2,6 +2,20 @@ const mongoose = require("mongoose");
 const subredditModel = require("../models/subreddits");
 const postModel = require("../models/posts");
 
+// subredditModel.create(
+//   {
+//     _id: new mongoose.Types.ObjectId(),
+//     name: "gaming",
+//     heading: "r/gaming",
+//     joined: false
+//   },
+//   (err, result) => {
+//     if (err) next(err);
+    
+//   }
+// );
+
+
 module.exports = {
   create: (req, res, next) => {
     subredditModel.create(
@@ -27,15 +41,13 @@ module.exports = {
     subredditModel.find({}, async (err, subreddits) => {
       if (err) next(err);
       else {
-        console.log("subreddit model find all " + subreddits[0]);
-
+        let temp = subreddits.filter(i => i.name === req.params.subName);
+        
         const posts = await postModel
           .find()
           .where("_id")
-          .in(subreddits[0].posts)
+          .in(temp[0].posts)
           .exec();
-
-        console.log("\n\n" + posts);
 
         res.json({
           status: "success",
