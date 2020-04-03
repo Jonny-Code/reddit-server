@@ -15,6 +15,42 @@ const subredditModel = require("../models/subreddits");
 //   }
 // );
 
+// subredditModel.findOne({ name: req.body.name }, (err, doc) => {
+//   if (err) next(err);
+//   else {
+//     postModel.create(
+//       {
+//         subreddit: doc._id,
+//         votes: req.body.votes,
+//         postedBy: req.body.postedBy,
+//         postedAt: req.body.postedAt,
+//         title: req.body.title,
+//         imgSrc: req.body.imgSrc,
+//         body: req.body.body,
+//         comments: req.body.comments
+//       },
+//       (err, result) => {
+//         if (err) next(err);
+//         else {
+//           subredditModel.findById(doc._id, (err, subInfo) => {
+//             if (err) next(err);
+//             else {
+//               subInfo.posts.push(result);
+//               subInfo.save(err => {
+//                 if (err) console.error(err);
+//               });
+//             }
+//           });
+//           res.json({
+//             status: "success",
+//             message: "posts has been added",
+//             data: result
+//           });
+//         }
+//       }
+//     );
+//   }
+// });
 
 module.exports = {
   create: (req, res, next) => {
