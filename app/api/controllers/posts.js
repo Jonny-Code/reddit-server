@@ -1,5 +1,5 @@
 const postModel = require("../models/posts");
-const subredditModel = require("../models/subreddits");
+const subredditModel = require("../models/subreddit");
 
 // Empty the posts array
 // subredditModel.findOneAndUpdate(

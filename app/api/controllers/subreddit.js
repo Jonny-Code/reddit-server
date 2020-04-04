@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const subredditModel = require("../models/subreddits");
+const subredditModel = require("../models/subreddit");
 const postModel = require("../models/posts");
 
 // subredditModel.create(
@@ -41,21 +41,22 @@ module.exports = {
     );
   },
   getAll: (req, res, next) => {
-    subredditModel.find({}, async (err, subreddits) => {
+    subredditModel.find({}, async (err, subreddit) => {
       if (err) next(err);
       else {
-        let temp = subreddits.filter(i => i.name === req.params.subName);
+        let [temp] = subreddit.filter(i => i.name === req.params.subName);
 
+        console.log(temp);
         const posts = await postModel
           .find()
           .where("_id")
-          .in(temp[0].posts)
+          .in(temp.posts)
           .exec();
 
         res.json({
           status: "success",
-          message: "found the subreddits",
-          data: { subreddits, posts }
+          message: "found the subreddit",
+          data: { subreddit: temp, posts }
         });
       }
     });
