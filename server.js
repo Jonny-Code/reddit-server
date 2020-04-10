@@ -3,6 +3,7 @@ const logger = require("morgan");
 const posts = require("./routes/posts");
 const users = require("./routes/users");
 const subreddit = require("./routes/subreddit");
+const comments = require("./routes/comments");
 const mongoose = require("./config/database");
 const genDB = require("./util/generateDB");
 const dotenv = require("dotenv");
@@ -52,6 +53,7 @@ app.use("/users", users);
 
 app.use("/posts", posts);
 app.use("/subreddit", subreddit);
+app.use("/comments", comments);
 
 app.get("/favicon.ico", (req, res) => {
   res.sendStatus(204);

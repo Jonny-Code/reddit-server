@@ -26,7 +26,7 @@ module.exports = {
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         heading: req.body.heading,
-        joined: req.body.joined
+        joined: req.body.joined,
       },
       (err, result) => {
         if (err) next(err);
@@ -34,31 +34,33 @@ module.exports = {
           res.json({
             status: "success",
             message: "posts has been added",
-            data: result
+            data: result,
           });
         }
       }
     );
   },
   getAll: (req, res, next) => {
-    subredditModel.find({}, async (err, subreddit) => {
-      if (err) next(err);
-      else {
-        let [temp] = subreddit.filter(i => i.name === req.params.subName);
+    subredditModel.find(
+      { name: req.params.subName },
+      async (err, subreddit) => {
+        if (err) next(err);
+        else {
+          let [temp] = subreddit;
 
-        console.log(temp);
-        const posts = await postModel
-          .find()
-          .where("_id")
-          .in(temp.posts)
-          .exec();
+          const posts = await postModel
+            .find()
+            .where("_id")
+            .in(temp.posts)
+            .exec();
 
-        res.json({
-          status: "success",
-          message: "found the subreddit",
-          data: { subreddit: temp, posts }
-        });
+          res.json({
+            status: "success",
+            message: "found the subreddit",
+            data: { subreddit: temp, posts },
+          });
+        }
       }
-    });
-  }
+    );
+  },
 };
