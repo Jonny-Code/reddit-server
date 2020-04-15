@@ -8,7 +8,8 @@ const commentsSchema = Schema({
   postedAt: Schema.Types.String,
   body: Schema.Types.String,
   isReply: Schema.Types.Boolean,
-  replies: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
+  repliesTo: [{ type: Schema.Types.ObjectId, ref: "Comment", default: null }],
+  replies: [],
 });
 
 module.exports = mongoose.model("Comment", commentsSchema);

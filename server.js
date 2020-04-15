@@ -5,7 +5,6 @@ const users = require("./routes/users");
 const subreddit = require("./routes/subreddit");
 const comments = require("./routes/comments");
 const mongoose = require("./config/database");
-const genDB = require("./util/generateDB");
 const dotenv = require("dotenv");
 const cors = require("cors");
 
@@ -48,9 +47,7 @@ const validateUser = (req, res, next) => {
   );
 };
 
-// public route
 app.use("/users", users);
-
 app.use("/posts", posts);
 app.use("/subreddit", subreddit);
 app.use("/comments", comments);
