@@ -8,6 +8,7 @@ const commentsSchema = Schema({
   postedAt: Schema.Types.String,
   body: Schema.Types.String,
   isReply: Schema.Types.Boolean,
+  hideComment: { type: Schema.Types.Boolean, default: false },
   repliesTo: [{ type: Schema.Types.ObjectId, ref: "Comment", default: null }],
   replies: [],
 });
