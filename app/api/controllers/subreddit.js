@@ -5,14 +5,17 @@ const postModel = require("../models/posts");
 // subredditModel.create(
 //   {
 //     _id: new mongoose.Types.ObjectId(),
-//     name: "gaming",
-//     heading: "r/gaming",
-//     title: "gaming",
+//     name: "Ubuntu",
+//     heading: "Ubuntu: Linux for Human Beings",
+//     title: "Ubuntu",
 //     bannerImgSrc:
-//       "https://styles.redditmedia.com/t5_2qh03/styles/bannerBackgroundImage_36bsu8h3urx11.png",
+//       "https://styles.redditmedia.com/t5_2qh62/styles/bannerBackgroundImage_6jdz5i1fbdi01.png",
 //     logoImgSrc:
-//       "https://b.thumbs.redditmedia.com/0PgZl68jAxA6T1BH6uvUQ5Bz1F1GrrJLCL8oi2Gz0Ak.png",
-//     joined: false
+//       "https://b.thumbs.redditmedia.com/LRf44Bj9FVFeFj5k2UPxRAewlcJ6z53b2Gr096IQovU.png",
+//     joined: false,
+//     memberCount: 139_000,
+//     membersOnline: 349,
+//     createdAt: "April 24th 2020, 12:46:35 pm",
 //   },
 //   (err, result) => {
 //     if (err) next(err);

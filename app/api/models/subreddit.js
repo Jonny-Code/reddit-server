@@ -9,7 +9,12 @@ const subredditSchema = Schema({
   bannerImgSrc: Schema.Types.String,
   logoImgSrc: Schema.Types.String,
   joined: Schema.Types.Boolean,
-  posts: [{ type: Schema.Types.ObjectId, ref: "Post" }]
+  memberCount: Schema.Types.Number,
+  membersOnline: Schema.Types.Number,
+  rules: [{ title: Schema.Types.String, body: Schema.Types.String }],
+  moderators: [],
+  createdAt: Schema.Types.String,
+  posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
 });
 
 module.exports = mongoose.model("Subreddit", subredditSchema);

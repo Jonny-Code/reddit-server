@@ -54,7 +54,7 @@ const subredditModel = require("../models/subreddit");
 
 module.exports = {
   create: (req, res, next) => {
-    subredditModel.findOne({ name: req.body.name }, (err, doc) => {
+    subredditModel.findOne(req.subreddit, (err, doc) => {
       if (err) next(err);
       else {
         postModel.create(
@@ -66,7 +66,7 @@ module.exports = {
             title: req.body.title,
             imgSrc: req.body.imgSrc,
             body: req.body.body,
-            comments: req.body.comments
+            comments: req.body.comments,
           },
           (err, result) => {
             if (err) next(err);
@@ -75,7 +75,7 @@ module.exports = {
                 if (err) next(err);
                 else {
                   subInfo.posts.push(result);
-                  subInfo.save(err => {
+                  subInfo.save((err) => {
                     if (err) console.error(err);
                   });
                 }
@@ -83,7 +83,7 @@ module.exports = {
               res.json({
                 status: "success",
                 message: "posts has been added",
-                data: result
+                data: result,
               });
             }
           }
@@ -98,7 +98,7 @@ module.exports = {
         res.json({
           status: "success",
           message: "Found the post",
-          data: { posts: postInfo }
+          data: { posts: postInfo },
         });
     });
   },
@@ -109,7 +109,7 @@ module.exports = {
         res.json({
           status: "success",
           message: "found the posts",
-          data: { posts }
+          data: { posts },
         });
       }
     });
@@ -124,7 +124,7 @@ module.exports = {
           res.json({
             status: "success",
             message: "post updated",
-            data: null
+            data: null,
           });
       }
     );
@@ -136,9 +136,9 @@ module.exports = {
         res.json({
           status: "success",
           message: "post was removed",
-          data: postInfo
+          data: postInfo,
         });
       }
     });
-  }
+  },
 };
