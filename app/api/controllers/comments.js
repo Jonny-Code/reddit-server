@@ -1,4 +1,5 @@
 const commentModel = require("../models/comments");
+const postModel = require("../models/posts");
 
 function nestComments(comments) {
   let temp1 = [];
@@ -30,16 +31,30 @@ function createComment(comment, res, next) {
   if (!comment.isReply) {
     commentModel.create(comment, (err, result) => {
       if (err) next(err);
-      res.json({
-        data: result,
-      });
+      else {
+        postModel.findOneAndUpdate(
+          comment.post,
+          { $inc: { comments: 1 } },
+          { new: true },
+          (err, doc) => {
+            if (err) {
+              console.log("Something wrong when updating data!");
+            }
+          }
+        );
+        res.json({
+          data: result,
+        });
+      }
     });
   } else {
     commentModel.findOne(
       { _id: comment.repliesTo[comment.repliesTo.length - 1] },
       (err, result) => {
         if (err) next(err);
-        commentModel.create(comment);
+        else {
+          commentModel.create(comment);
+        }
       }
     );
   }
@@ -55,7 +70,6 @@ module.exports = {
     commentModel.find({ post: req.params.postId }, (err, comments) => {
       if (err) next(err);
       else {
-        // console.log(comments);
         if (comments.length) {
           let c = nestComments(comments);
           res.json({

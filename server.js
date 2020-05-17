@@ -49,7 +49,7 @@ const validateUser = (req, res, next) => {
 
 app.use("/users", users);
 app.use("/posts", posts);
-app.use("/subreddit", subreddit);
+app.use("/subreddits", subreddit);
 app.use("/comments", comments);
 
 app.get("/favicon.ico", (req, res) => {
@@ -57,11 +57,11 @@ app.get("/favicon.ico", (req, res) => {
 });
 
 // handle 404 explicitly
-app.use((req, res, next) => {
-  let err = new Error("Not Found");
-  err.status = 404;
-  next(err);
-});
+// app.use((req, res, next) => {
+//   let err = new Error("Not Found");
+//   err.status = 404;
+//   next(err);
+// });
 
 // handle errors
 app.use((err, req, res, next) => {

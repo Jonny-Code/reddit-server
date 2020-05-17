@@ -7,12 +7,12 @@ const postModel = require("../models/posts");
 //     _id: new mongoose.Types.ObjectId(),
 //     name: "Ubuntu",
 //     heading: "Ubuntu: Linux for Human Beings",
+//     joined: false,
 //     title: "Ubuntu",
 //     bannerImgSrc:
 //       "https://styles.redditmedia.com/t5_2qh62/styles/bannerBackgroundImage_6jdz5i1fbdi01.png",
 //     logoImgSrc:
 //       "https://b.thumbs.redditmedia.com/LRf44Bj9FVFeFj5k2UPxRAewlcJ6z53b2Gr096IQovU.png",
-//     joined: false,
 //     memberCount: 139_000,
 //     membersOnline: 349,
 //     createdAt: "April 24th 2020, 12:46:35 pm",
@@ -30,13 +30,19 @@ module.exports = {
         name: req.body.name,
         heading: req.body.heading,
         joined: req.body.joined,
+        title: req.body.title,
+        bannerImgSrc: req.body.bannerImgSrc,
+        logoImgSrc: req.body.logoImgSrc,
+        memberCount: req.body.memberCount,
+        membersOnline: req.body.membersOnline,
+        createdAt: req.body.createdAt,
       },
       (err, result) => {
         if (err) next(err);
         else {
           res.json({
             status: "success",
-            message: "posts has been added",
+            message: "subreddit has been added",
             data: result,
           });
         }
