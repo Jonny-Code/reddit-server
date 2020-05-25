@@ -54,6 +54,16 @@ function createComment(comment, res, next) {
         if (err) next(err);
         else {
           commentModel.create(comment);
+          postModel.findOneAndUpdate(
+            comment.post,
+            { $inc: { comments: 1 } },
+            { new: true },
+            (err, doc) => {
+              if (err) {
+                console.log("Something wrong when updating data!");
+              }
+            }
+          );
         }
       }
     );
