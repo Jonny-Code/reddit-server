@@ -32,14 +32,19 @@ function createComment(comment, res, next) {
     commentModel.create(comment, (err, result) => {
       if (err) next(err);
       else {
+        // TODO!! -- FIXED
+        // using wrong post id with comment.post
+        console.log(comment.post);
         postModel.findOneAndUpdate(
-          comment.post,
+          { _id: xcomment.post },
           { $inc: { comments: 1 } },
           { new: true },
           (err, doc) => {
             if (err) {
               console.log("Something wrong when updating data!");
             }
+            console.log("updated post");
+            console.log(doc);
           }
         );
         res.json({
@@ -72,6 +77,7 @@ function createComment(comment, res, next) {
 
 module.exports = {
   create: (req, res, next) => {
+    console.log("comment to be created");
     console.log(req.body);
     createComment(req.body, res, next);
   },
