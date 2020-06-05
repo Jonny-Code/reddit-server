@@ -36,7 +36,7 @@ function createComment(comment, res, next) {
         // using wrong post id with comment.post
         console.log(comment.post);
         postModel.findOneAndUpdate(
-          { _id: xcomment.post },
+          { _id: comment.post },
           { $inc: { comments: 1 } },
           { new: true },
           (err, doc) => {
