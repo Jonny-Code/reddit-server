@@ -2,29 +2,28 @@ const commentModel = require("../models/comments");
 const postModel = require("../models/posts");
 
 function nestComments(comments) {
-  let temp1 = [];
-  let temp2 = [];
+  let temp = [];
 
   comments.forEach((c) => {
     if (!c.isReply) {
-      temp2.push(c);
+      temp.push(c);
     }
   });
 
   comments.forEach((c) => {
     for (let i = 0; i < comments.length; i++) {
       if (
-        comments[i].repliesTo[comments[i].repliesTo.length - 1] !== undefined &&
+        typeof comments[i].repliesTo[comments[i].repliesTo.length - 1] !==
+          "undefined" &&
         c._id.toString() ===
           comments[i].repliesTo[comments[i].repliesTo.length - 1].toString()
       ) {
         c.replies.push(comments[i]);
-        temp1.push(c);
       }
     }
   });
 
-  return temp2;
+  return temp;
 }
 
 function createComment(comment, res, next) {
@@ -32,9 +31,6 @@ function createComment(comment, res, next) {
     commentModel.create(comment, (err, result) => {
       if (err) next(err);
       else {
-        // TODO!! -- FIXED
-        // using wrong post id with comment.post
-        console.log(comment.post);
         postModel.findOneAndUpdate(
           { _id: comment.post },
           { $inc: { comments: 1 } },
@@ -60,7 +56,7 @@ function createComment(comment, res, next) {
         else {
           commentModel.create(comment);
           postModel.findOneAndUpdate(
-            comment.post,
+            { _id: comment.post },
             { $inc: { comments: 1 } },
             { new: true },
             (err, doc) => {
@@ -77,8 +73,6 @@ function createComment(comment, res, next) {
 
 module.exports = {
   create: (req, res, next) => {
-    console.log("comment to be created");
-    console.log(req.body);
     createComment(req.body, res, next);
   },
 
