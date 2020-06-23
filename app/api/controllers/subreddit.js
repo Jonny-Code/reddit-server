@@ -13,8 +13,8 @@ const postModel = require("../models/posts");
 //       "https://styles.redditmedia.com/t5_2qh62/styles/bannerBackgroundImage_6jdz5i1fbdi01.png",
 //     logoImgSrc:
 //       "https://b.thumbs.redditmedia.com/LRf44Bj9FVFeFj5k2UPxRAewlcJ6z53b2Gr096IQovU.png",
-//     memberCount: 139_000,
-//     membersOnline: 349,
+//     memberCount: 0,
+//     membersOnline: 0,
 //     createdAt: "April 24th 2020, 12:46:35 pm",
 //   },
 //   (err, result) => {

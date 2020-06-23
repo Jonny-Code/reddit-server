@@ -9,7 +9,9 @@ const postSchema = Schema({
   title: Schema.Types.String,
   imgSrc: Schema.Types.String,
   body: Schema.Types.String,
-  comments: Schema.Types.Number
+  comments: Schema.Types.Number,
+  upvoted: Schema.Types.Boolean,
+  downvoted: Schema.Types.Boolean,
 });
 
 module.exports = mongoose.model("Post", postSchema);

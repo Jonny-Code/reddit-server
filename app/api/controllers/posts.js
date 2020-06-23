@@ -67,6 +67,8 @@ module.exports = {
             imgSrc: req.body.imgSrc,
             body: req.body.body,
             comments: req.body.comments,
+            upvoted: req.body.upvoted,
+            downvoted: req.body.downvoted,
           },
           (err, result) => {
             if (err) next(err);

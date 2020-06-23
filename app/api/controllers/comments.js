@@ -40,7 +40,6 @@ function createComment(comment, res, next) {
               console.log("Something wrong when updating data!");
             }
             console.log("updated post");
-            console.log(doc);
           }
         );
         res.json({

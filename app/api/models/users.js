@@ -8,21 +8,23 @@ const UserSchema = new Schema({
   name: {
     type: String,
     trim: true,
-    required: true
+    required: true,
   },
   email: {
     type: String,
     trim: true,
-    required: true
+    required: true,
   },
   password: {
     type: String,
     trim: true,
-    required: true
-  }
+    required: true,
+  },
+  upvoted: [{ type: Schema.Types.ObjectId, ref: "Post" }],
+  downvoted: [{ type: Schema.Types.ObjectId, ref: "Post" }],
 });
 
-UserSchema.pre("save", function(next) {
+UserSchema.pre("save", function (next) {
   this.password = bcrypt.hashSync(this.password, saltRounds);
   next();
 });
