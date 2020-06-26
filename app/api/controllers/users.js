@@ -122,14 +122,13 @@ module.exports = {
               console.log("something went wrong decrementing post votes");
             }
             console.log(doc);
+            res.json({
+              status: "success",
+              message: "user was updated",
+              data: doc,
+            });
           }
         );
-
-        res.json({
-          status: "success",
-          message: "user was updated",
-          data,
-        });
       }
     );
   },
