@@ -199,15 +199,14 @@ module.exports = {
             if (err) {
               console.log("something went wrong incrementing post votes");
             }
+            res.json({
+              status: "success",
+              message: "user was updated",
+              data: doc,
+            });
             console.log(doc);
           }
         );
-
-        res.json({
-          status: "success",
-          message: "user was updated",
-          data,
-        });
       }
     );
   },
