@@ -23,7 +23,6 @@ module.exports = {
     );
   },
   authenticate: (req, res, next) => {
-    console.log(req.body);
     userModel.findOne({ email: req.body.email }, (err, userInfo) => {
       if (err) next(err);
       else if (!userInfo) {
